@@ -1,7 +1,8 @@
 # Example Docker Images
 
-:exclamation: Only download images from trusted sources. Reviewing a
-Dockerfile and building your own image greatly reduces the risk of running
+:exclamation: Only download images from trusted sources.
+
+Reviewing a Dockerfile and building your own image reduces the risk of running
 malicious code.
 
 The MicroK8s install process can be executed by a Docker container run from an
