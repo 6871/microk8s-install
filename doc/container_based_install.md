@@ -70,7 +70,7 @@ container (using image
 ```kubectl get all --all-namespaces```:
 
 ```
-# Run in project's root directory (so "generated" directory can be found)
+# Run this in project's root directory (so "generated" directory can be found)
 if [[ -d generated ]]; then
   kc_file="$PWD/$(find generated -type f -name config|sort|tail -1)"
 
@@ -95,7 +95,7 @@ container (using image
 ```kubectl proxy --address 0.0.0.0``` (terminate with ```CTRL-C```):
 
 ```
-# Run in project's root directory (so "generated" directory can be found)
+# Run this in project's root directory (so "generated" directory can be found)
 if [[ -d generated ]]; then
   kc_file="$PWD/$(find generated -type f -name config|sort|tail -1)"
 
