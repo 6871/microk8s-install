@@ -1,0 +1,24 @@
+# Install MicroK8s rbac service workaround; possible catch22 using Helm to do
+# this so using kubectl for now.
+
+- name: Copy Helm 2 Tiller rbac install file to host
+  copy:
+    src: rbac-access-tiller.yaml
+    dest: "{{working_dir}}/rbac-access-tiller.yaml"
+
+- name: Install Helm 2 Tiller rbac workaround
+  become: true
+  command: /snap/bin/microk8s.kubectl apply
+    -f "{{working_dir}}/rbac-access-tiller.yaml"
+  register: output_rbac_access_tiller
+  changed_when:
+    - not output_rbac_access_tiller.stdout
+      | regex_search('^[^$]* unchanged$[^$]* unchanged$', multiline=True)
+
+- name: stdout and stderr
+  debug:
+    msg:
+      - "stdout"
+      - "{{output_rbac_access_tiller.stdout_lines}}"
+      - "stderr"
+      - "{{output_rbac_access_tiller.stderr_lines}}"

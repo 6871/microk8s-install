@@ -1,0 +1,30 @@
+# Exports kubeconfig to file and copies it to Ansible controller host.
+
+# Use shell (instead of command) to permit use of "${HOME}", ">", etc...
+- name: Create MicroK8s kubeconfig (containing target host IP) on target host
+    @ {{kubeconfig_host_path}}
+  when: kubeconfig_export
+  become: true
+  shell: /snap/bin/microk8s.config > "{{kubeconfig_host_path}}"
+  register: output_export_kubeconfig
+
+- name: stdout and stderr
+  debug:
+    msg:
+      - "stdout"
+      - "{{output_export_kubeconfig.stdout_lines}}"
+      - "stderr"
+      - "{{output_export_kubeconfig.stderr_lines}}"
+
+- name: Copy kubeconfig {{kubeconfig_host_path}} from {{inventory_hostname}}
+    to Ansible controller {{kubeconfig_local_path}})
+  when:
+    - kubeconfig_export
+    - kubeconfig_copy_local
+  fetch:
+    src: "{{kubeconfig_host_path}}"
+    dest: "{{kubeconfig_local_path}}"
+- name: Print summary
+  debug:
+    msg:
+      - "{{kubeconfig_host_path}} copied to {{kubeconfig_local_path}}"

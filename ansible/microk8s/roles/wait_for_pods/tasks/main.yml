@@ -1,0 +1,18 @@
+# Wait for all system pods to be running.
+
+- name: Wait for kube-system pods to be ready
+  become: true
+  command: microk8s.kubectl wait --namespace kube-system
+    --for condition=Ready pods --all --timeout 5s
+  changed_when: False
+  register: output_kube_system_pods_wait
+  until: output_kube_system_pods_wait is not failed
+  retries: 60
+
+- name: stdout and stderr
+  debug:
+    msg:
+      - "stdout"
+      - "{{output_kube_system_pods_wait.stdout_lines}}"
+      - "stderr"
+      - "{{output_kube_system_pods_wait.stderr_lines}}"

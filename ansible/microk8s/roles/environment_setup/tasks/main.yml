@@ -1,0 +1,6 @@
+# Configuration used by more than one role.
+
+- name: Ensure working directory {{working_dir}} exists
+  file:
+    path: "{{working_dir}}"
+    state: directory

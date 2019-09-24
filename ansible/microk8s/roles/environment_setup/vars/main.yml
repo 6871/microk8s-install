@@ -1,0 +1,2 @@
+# Working directory to be used on target host
+working_dir: "{{ansible_env.HOME}}/microk8s-install"

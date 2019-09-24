@@ -1,0 +1,9 @@
+# Install Tiller on the target MicroK8s instance.
+
+- name: Install Tiller (microk8s.helm init)
+  become: true
+  command: /snap/bin/microk8s.helm init
+    --service-account microk8s-install-rbac-tiller --upgrade
+
+- include_role:
+    name: wait_for_pods

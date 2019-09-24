@@ -1,0 +1,26 @@
+# Enables MicroK8s services (https://microk8s.io) on the target host.
+
+- name: Enable MicroK8s dns (step 1)
+  become: true
+  command: /snap/bin/microk8s.enable dns
+  register: output_microk8s_enable_1
+  until: output_microk8s_enable_1 is not failed
+  retries: 3
+
+# Enabling dns can impact main service so make sure it's ready again
+- include_role:
+    name: wait_for_microk8s
+
+# Ensure dns is ready to eliminate race condition installing other services
+- include_role:
+    name: wait_for_pods
+
+- name: Enable MicroK8s dashboard, storage, ingress, rbac and helm (step 2)
+  become: true
+  command: /snap/bin/microk8s.enable dashboard storage ingress rbac helm
+  register: output_microk8s_enable_2
+  until: output_microk8s_enable_2 is not failed
+  retries: 3
+
+- include_role:
+    name: wait_for_pods

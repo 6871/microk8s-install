@@ -1,0 +1,2 @@
+# Location on target host to export MicroK8s dashboard login token to.
+dashboard_token_host_path: "{{working_dir}}/token"

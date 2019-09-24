@@ -1,0 +1,44 @@
+# Exports dashboard token to file and copies it to Ansible controller host.
+
+- name: Export MicroK8s dashboard login token to file
+    {{dashboard_token_host_path}}
+  when: dashboard_token_export
+  become: true
+  vars:
+    python_json_parse: |-
+      import json,sys
+      j = json.load(sys.stdin)
+      print(j["data"]["token"])
+  shell: |-
+    /snap/bin/microk8s.kubectl get secret \
+      "$(/snap/bin/microk8s.kubectl get secret -n kube-system \
+      | grep '^microk8s-install-rbac-dashboard' \
+      | awk '{print $1}')" \
+    -n kube-system -o json \
+    | python3 -c '{{python_json_parse}}' \
+    | base64 --decode \
+    > "{{dashboard_token_host_path}}"
+  register: output_export_dashboard_token
+
+- name: Print export dashboard token operation's stdout and stderr
+  debug:
+    msg:
+      - "stdout"
+      - "{{output_export_dashboard_token.stdout_lines}}"
+      - "stderr"
+      - "{{output_export_dashboard_token.stderr_lines}}"
+
+- name: Copy dashboard login token {{dashboard_token_host_path}} from
+    {{inventory_hostname}} to Ansible controller
+    {{dashboard_token_local_path}})
+  when:
+    - dashboard_token_export
+    - dashboard_token_copy_local
+  fetch:
+    src: "{{dashboard_token_host_path}}"
+    dest: "{{dashboard_token_local_path}}"
+
+- name: Print summary
+  debug:
+    msg:
+      - "{{dashboard_token_host_path}} copied to {{dashboard_token_local_path}}"

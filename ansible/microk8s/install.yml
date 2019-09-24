@@ -1,0 +1,10 @@
+- hosts: all
+  roles:
+    - environment_setup
+    - install_microk8s
+    - enable_services
+    - rbac_access_dashboard
+    - rbac_access_tiller
+    - install_tiller
+    - export_kubeconfig
+    - export_dashboard_token

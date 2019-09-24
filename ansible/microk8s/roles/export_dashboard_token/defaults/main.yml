@@ -1,0 +1,9 @@
+# Whether to generate a dahsboard login token file on the MicroK8s host.
+dashboard_token_export: true
+
+# Whether to copy the dashboard token to the Ansible controller host.
+dashboard_token_copy_local: true
+
+# Where to copy MicroK8s dashboard login token file on Ansible controller host
+dashboard_token_local_path: >-
+  {{lookup('env', 'DIR_HOST_SHARE')}}/dashboard_token

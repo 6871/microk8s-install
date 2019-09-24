@@ -1,0 +1,24 @@
+# Install MicroK8s rbac service workaround; possible catch22 using Helm to do
+# this so using kubectl for now.
+
+- name: Copy rbac access workaround install file to host
+  copy:
+    src: rbac-access-dashboard.yaml
+    dest: "{{working_dir}}/rbac-access-dashboard.yaml"
+
+- name: Install rbac workaround for dashboard and helm access
+  become: true
+  command: /snap/bin/microk8s.kubectl apply
+    -f "{{working_dir}}/rbac-access-dashboard.yaml"
+  register: output_rbac_access_dashboard
+  changed_when:
+    - not output_rbac_access_dashboard.stdout
+      | regex_search('^[^$]* unchanged$[^$]* unchanged$', multiline=True)
+
+- name: stdout and stderr
+  debug:
+    msg:
+      - "stdout"
+      - "{{output_rbac_access_dashboard.stdout_lines}}"
+      - "stderr"
+      - "{{output_rbac_access_dashboard.stderr_lines}}"

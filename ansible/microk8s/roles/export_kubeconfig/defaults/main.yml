@@ -1,0 +1,8 @@
+# Whether to generate a kubeconfig file on the MicroK8s host.
+kubeconfig_export: true
+
+# Whether to copy kubeconfig from MicroK8s host to the Ansible controller host.
+kubeconfig_copy_local: true
+
+# Where to copy kubeconfig to on Ansible controller host
+kubeconfig_local_path: "{{lookup('env', 'DIR_HOST_SHARE')}}/kubeconfig"

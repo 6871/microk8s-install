@@ -1,0 +1,8 @@
+# Wait for MicroK8s to report it is ready.
+- name: Wait for microk8s to be ready
+  become: true
+  command: /snap/bin/microk8s.status --wait-ready --timeout 5
+  changed_when: False
+  register: output_microk8s_install_wait
+  until: output_microk8s_install_wait is not failed
+  retries: 60

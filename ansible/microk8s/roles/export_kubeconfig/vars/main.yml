@@ -1,0 +1,2 @@
+# Location on target host to export the MicroK8s kubeconfig file.
+kubeconfig_host_path: "{{working_dir}}/config"

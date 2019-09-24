@@ -1,0 +1,13 @@
+# Installs MicroK8s (https://microk8s.io) on the target host.
+- name: Install MicroK8s
+  become: true
+  snap:
+    name: microk8s
+    classic: yes
+    channel: "{{microk8s_channel}}"
+  register: output_microk8s_install
+  until: output_microk8s_install is not failed
+  retries: 3
+
+- include_role:
+    name: wait_for_microk8s
