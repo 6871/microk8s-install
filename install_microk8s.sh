@@ -5,7 +5,7 @@
 #
 # Requires Docker client and private key to connect to remote host.
 #
-# Instructions at: doc/container_based_install.md
+# Instructions at: doc/install_microk8s.md
 
 # source required functions
 . bash/client/lib/lib_client.sh
