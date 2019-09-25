@@ -15,10 +15,15 @@ has the following benefits:
 - The primary goal is fast deployment (not security, resilience or scalability)
 - MicroK8s is intended for private non-production environments
 
-## Installing
+## Install Steps
 
-- [Prerequisites](doc/prerequisites.md)
-- [Container-based install and access steps](doc/container_based_install.md)
+- Review the [prerequisites](doc/prerequisites.md)
+- Choose one of the following install methods:
+  - [Run the ```install_microk8s.sh``` helper script](doc/install_microk8s.md)
+  - [Run ```docker run``` directly](doc/docker_run_install.md)
+  - [Run ```ansible-playbook``` directly](doc/ansible_playbook_install.md)
+- Post-install:
+  - [Access MicroK8s via a container](doc/access_microk8s.md)
 
 <br>
 
