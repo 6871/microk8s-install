@@ -1,6 +1,6 @@
 - hosts: all
   vars:
-    microk8s_channel: 1.15/stable
+    microk8s_channel: stable
   roles:
     - environment_setup
     - install_microk8s
