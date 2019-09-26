@@ -1,2 +1,2 @@
 # The default MicroK8s channel to use (stable, 1.14/stable, beta, etc...)
-microk8s_channel: stable
+microk8s_channel: 1.15/stable
