@@ -25,6 +25,12 @@ has the following benefits:
 - Post-install:
   - [Access MicroK8s via a container](doc/access_microk8s.md)
 
+## Releases
+
+Version | Installs MicroK8s | Description | Date
+--- | --- | --- | ---
+[```1.0.0```](https://github.com/6871/microk8s-install/tree/1.0.0) | ```1.15/stable``` | Breaking change in ```1.16/stable``` | 2019.09.26
+
 <br>
 
 ---
