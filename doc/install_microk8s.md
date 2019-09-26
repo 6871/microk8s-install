@@ -26,16 +26,14 @@ following actions:
    following environment specific variables set:
 
 ```
-# Use a Docker image with Ansible (and optionally Helm and kubectl) installed 
-image=""
-
+image=""            # Name of Docker image with Ansible installed
 target_host=""      # Target host's IP address or name
 ssh_key=""          # Path of private key to SSH to host
 ssh_user=""         # Username to use to SSH to host 
-ask_password="no"   # Whether to prompt for sudo password (optional)
+ask_password=       # Optional sudo password prompt: yes|no
 
 ./install_microk8s.sh \
-  "${image}" "${target_host}" "${ssh_key}" "${ssh_user}" "${ask_password}"
+  "${image}" "${target_host}" "${ssh_key}" "${ssh_user}" ${ask_password}
 ```
 
 :exclamation: If the SSH user needs to enter a password for sudo operations, 
@@ -44,10 +42,11 @@ set ```ask_password="yes"```. <sup>1</sup>
 For example, the following command uses Docker image
 [```6871/ansible:1.0.1```](https://hub.docker.com/r/6871/ansible) to run a
 container that runs Ansible to install MicroK8s on host ```192.168.0.100```
-using private key ```~/.ssh/id_rsa``` to connect as user ```k8s```:
+using private key ```~/.ssh/id_rsa``` to connect as user ```k8s```, asking for
+the user's sudo password<sup>1</sup>:
 
 ```
-./install_microk8s.sh 6871/ansible:1.0.1 192.168.0.100 ~/.ssh/id_rsa k8s
+./install_microk8s.sh 6871/ansible:1.0.1 192.168.0.100 ~/.ssh/id_rsa k8s yes
 ```
 
 On completion, [```install_microk8s.sh```](../install_microk8s.sh) prints the
@@ -84,3 +83,7 @@ and helm installed; some image examples are described here:
 <sup>5</sup> The usage examples mount the new MicroK8s environment's
 kubeconfig file into the container at the following default location
 ```/root/.kube/config```.
+
+## Accessing MicroK8s
+
+See: [access_microk8s.md](access_microk8s.md)
