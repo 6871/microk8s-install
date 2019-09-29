@@ -29,6 +29,7 @@ has the following benefits:
 
 Version | Installs MicroK8s | Description | Date
 --- | --- | --- | ---
+[```1.1.0```](https://github.com/6871/microk8s-install/tree/1.0.0) | ```1.16/stable``` | Applies Tiller deployment workaround<br>https://github.com/helm/helm/issues/6374 | 2019.09.29
 [```1.0.0```](https://github.com/6871/microk8s-install/tree/1.0.0) | ```1.15/stable``` | Breaking change in ```1.16/stable``` | 2019.09.26
 
 <br>
