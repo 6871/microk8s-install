@@ -1,9 +1,20 @@
 # Install Tiller on the target MicroK8s instance.
 
+# For Helm on Kubernetes 1.16.0 use workaround from:
+# https://github.com/helm/helm/issues/6374
 - name: Install Tiller (microk8s.helm init)
   become: true
-  command: /snap/bin/microk8s.helm init
-    --service-account microk8s-install-rbac-tiller --upgrade
+  vars:
+    sed_edit_string: "s@apiVersion: extensions/v1beta1@apiVersion: apps/v1@"
+    # Use trailing "\" for spaceless newline
+    override_string: "spec.selector.matchLabels.'name'='tiller',\
+      spec.selector.matchLabels.'app'='helm'"
+  shell: /snap/bin/microk8s.helm init
+    --service-account microk8s-install-rbac-tiller
+    --override {{override_string}}
+    --output yaml
+    | sed '{{sed_edit_string}}'
+    | microk8s.kubectl apply -f -
 
 - include_role:
     name: wait_for_pods
